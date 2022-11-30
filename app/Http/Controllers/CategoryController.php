@@ -14,7 +14,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        // Mengambil semua data di tabel Kategori
+        $category = Category::all();
+
+        // Pindah ke halaman kategori dan membawa data dari tabel kategori
+        return view('kategori', compact('category'));
     }
 
     /**
@@ -35,7 +39,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Memvalidasi Data jika ada
+        $data = $request->validate([
+            'name' => 'required',
+        ]);
+
+        // Setelah di Validasi berhasil, Data akan dimasukkan ke database
+        Category::create($data);
+
+        // Jika berhasil dibuat akan di alihkan ke halaman kategori
+        return redirect('category');
     }
 
     /**
@@ -69,7 +82,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        // Mengupdate Semua data yang ada dalam tabel Kategori
+        $category->update($request->all());
+
+        // Jika berhasil akan dialihkan ke halaman kategori
+        return redirect('category');
     }
 
     /**
@@ -80,6 +97,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        // Menghapus data yang ada dalam tabel kategori
+        $category->delete();
+
+        // Setelah berhasil akan dialihkan ke halaman kategori
+        return redirect('category');
     }
 }
